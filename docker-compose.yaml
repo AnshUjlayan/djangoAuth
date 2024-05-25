@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  # django:
+  #   image: djangoAuth
+  #   container_name: djangoAuth_django
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - .:/usr/src/app
+  #   networks:
+  #     - djangoAuth
+  #   depends_on:
+  #     - postgres
+  #   env_file:
+  #     - .env
+
+  postgres:
+    image: postgres:latest
+    container_name: djangoAuth_postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    networks:
+      - djangoAuth
+    volumes:
+      - djangoAuth:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+networks:
+  djangoAuth:
+    driver: bridge
+
+volumes:
+  djangoAuth:
+    driver: local
